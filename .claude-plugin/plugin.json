@@ -1,0 +1,12 @@
+{
+  "name": "mousetic",
+  "displayName": "Mousetic",
+  "description": "MX Master 4 haptic feedback for Claude Code events",
+  "version": "1.0.0",
+  "author": {
+    "name": "Edden Amber"
+  },
+  "repository": "https://github.com/edden27/MXMaster4-ClaudeCode-Haptics",
+  "license": "MIT",
+  "keywords": ["haptics", "hooks", "logitech", "mx-master-4", "notifications"]
+}
