@@ -1,13 +1,13 @@
 # MXMaster4 Haptics For Claude Code
 
-Haptic feedback from your Logi MX Master 4 for Claude Code events. Feel when a response finishes, when something needs approval, when an error happens — without looking at the screen.
+Haptic feedback from your Logi MX Master 4 for Claude Code events. Feel/hear when a response finishes, when something needs approval, when an error happens — while working on other things.
 
-This is a Claude Code plugin. Install it and your mouse buzzes differently for different events. Your brain learns the patterns fast. Even with hand-off-mouse (vim, btw) you can subtly hear the haptics, which I found to be more tolerable than sound effects or tts audio.
+This is a Claude Code plugin. Install it and your mouse buzzes differently for specific events. Your brain learns the patterns fast. Even with hand-off-mouse (vim, btw) you can subtly hear the haptics, which I found to be more tolerable than sound effects or spoken/tts alternatives.
 
 ## Requirements
 
 - **macOS** (arm64) - See [below](#platform-support) for Linux/Windows options
-- **Logitech MX Master 4** — the only mouse with controllable haptics
+- **Logitech MX Master 4** — mouse has haptics
 - **Logi Options+** (free) — no Logi account required
 - **HapticWeb plugin** (free) installed in Logi Options+ — no Logi account required
 - **Claude Code**
@@ -22,9 +22,9 @@ Open Logi Options+ → MX Master 4 → Haptic Feedback settings → find HapticW
 **Manual (no Logitech account version):**  
 Download `HapticWeb.lplug4` from [GitHub Releases](https://github.com/jmw-fr/HapticWeb/releases) → Logi Options+ → MX Master 4 → Haptic Feedback → Settings popover → Install and Uninstall Plugins → double-click the `.lplug4` file → click Continue
 
-The server starts automatically at `https://local.jmw.nz:41443/`. The `local.jmw.nz` domain just resolves to `127.0.0.1` (localhost) — it uses this to serve HTTPS with a valid certificate instead of self-signed certs.
+That's it. The server starts automatically at `https://local.jmw.nz:41443/`. The `local.jmw.nz` domain just resolves to `127.0.0.1` (localhost) — it handles certificates automatically.
 
-**Try it out:** Open the [Haptic Playground](https://haptics.jmw.nz/playground) — it detects your mouse locally and lets you click any waveform to feel it instantly.
+**Try it out:** Open the [Haptic Playground](https://haptics.jmw.nz/playground) — it detects your mouse locally (press connect button) and lets you click around on the waveform names to feel/hear them.
 
 ## Install the Plugin
 
@@ -73,7 +73,7 @@ claude --plugin-dir /path/to/MXMaster4-ClaudeCode-Haptics
 | `TaskCompleted` | A task finished       | `square`           |
 
 
-### System
+### System stuff
 
 
 | Event              | What happened                  | Waveform             |
@@ -83,14 +83,11 @@ claude --plugin-dir /path/to/MXMaster4-ClaudeCode-Haptics
 | `PostModelSwitch`  | The model changed mid-session  | `sharp_state_change` |
 
 
-## Customize
+## Change the defaults
 
-Every mapping lives in `hooks/hooks.json`. To change which haptic plays for which event, just edit the waveform name — no recompiling, no code changes.
+This plugin adds hooks to your Claude settings. The added hooks live in `hooks/hooks.json`. To change which haptic plays for which event, just edit the waveform name in your `settings.json` — no recompiling, no code changes. Mid-session just do `/reload-plugins`
 
-Available waveforms:
-`sharp_collision` `sharp_state_change` `knock` `damp_collision` `mad` `ringing` `subtle_collision` `completed` `jingle` `damp_state_change` `firework` `happy_alert` `wave` `angry_alert` `square`
-
-Use the [Haptic Playground](https://haptics.jmw.nz/playground) to try each one on your mouse before picking.
+Use the [Haptic Playground](https://haptics.jmw.nz/playground) to see all available waveforms and their names.
 
 ## How It Works
 
@@ -133,14 +130,6 @@ swiftc -O mousetic.swift -o bin/mousetic
 
 - Verify internet for initial cert download
 - Restart Logi Plugin Service
-
-**Port in use:**
-
-```bash
-lsof -ti:41443 | xargs kill -9
-```
-
-Then restart Logi Plugin Service.
 
 **Delayed haptics:**
 Any perceived delay is Claude Code's hook scheduling, not the binary. The haptic triggers in ~30ms once the hook fires.
