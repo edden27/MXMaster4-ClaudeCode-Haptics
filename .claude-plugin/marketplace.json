@@ -1,4 +1,8 @@
 {
+  "name": "MXMaster4-ClaudeCode-Haptics",
+  "owner": {
+    "name": "Edden Amber"
+  },
   "plugins": [
     {
       "name": "mousetic",
